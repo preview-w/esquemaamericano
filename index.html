@@ -45,13 +45,47 @@
                 </div>
             </div>
 
-            <!-- Vídeo -->
-<div class="video-wrapper">
-    <video class="main-video" controls poster="images/imagem.jpeg">
-        <source src="video.mp4" type="video/mp4">
-        Seu navegador não suporta a reprodução de vídeos.
-    </video>
+<!-- Vídeo -->
+<div class="video-wrapper" style="position: relative; display: inline-block; width: 100%; max-width: 600px;">
+  <video id="mainVideo" class="main-video" autoplay muted playsinline loop style="width: 100%; border-radius: 12px;">
+      <source src="video.mp4" type="video/mp4">
+      Seu navegador não suporta a reprodução de vídeos.
+  </video>
+
+  <!-- Aviso sobre o vídeo -->
+  <div id="soundNotice" 
+       style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+              background: rgba(0,0,0,0.6); color: #fff; padding: 12px 20px;
+              border-radius: 8px; font-family: 'Inter', sans-serif;
+              font-size: 16px; display: flex; align-items: center; gap: 8px;
+              cursor: pointer; transition: opacity 0.3s ease;">
+      🔊 Clique para ouvir o som
+  </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const video = document.getElementById('mainVideo');
+    const notice = document.getElementById('soundNotice');
+
+    // Garante que o vídeo toque automaticamente
+    video.play().catch(err => console.log('⚠️ Reprodução automática bloqueada:', err));
+
+    // Quando o aviso é clicado
+    notice.addEventListener('click', () => {
+      // Esconde o aviso com transição suave
+      notice.style.opacity = '0';
+      setTimeout(() => notice.style.display = 'none', 300);
+
+      // Recomeça o vídeo com som ativado
+      video.muted = false;
+      video.currentTime = 0;
+      video.play();
+    });
+  });
+</script>
+
+
 
             <!-- Indicador de urgência -->
             <div class="urgency-indicator">
